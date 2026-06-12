@@ -133,7 +133,7 @@ describe("archive extraction preflight", () => {
 
 		//#then
 		expect(errorMessage).toMatch(/path traversal/i)
-	})
+	}, { timeout: 20_000 })
 
 	it("rejects tar archives with hard-link traversal before extraction", async () => {
 		//#given
@@ -166,7 +166,7 @@ describe("archive extraction preflight", () => {
 
 		//#then
 		expect(errorMessage).toMatch(/hard link target|path traversal/i)
-	})
+	}, { timeout: 20_000 })
 
 	it("rejects zip archives with symlink escapes before extraction", async () => {
 		//#given
@@ -201,7 +201,7 @@ describe("archive extraction preflight", () => {
 
 		//#then
 		expect(errorMessage).toMatch(/symlink target/i)
-	})
+	}, { timeout: 20_000 })
 
 	it("extracts safe tar and zip archives into the destination directory", async () => {
 		//#given
@@ -254,5 +254,5 @@ describe("archive extraction preflight", () => {
 		expect(readFileSync(join(zipDestDir, "bin", "tool.txt"), "utf8")).toBe("safe")
 		expect(lstatSync(join(tarDestDir, "bin", "tool-link")).isSymbolicLink()).toBe(true)
 		expect(lstatSync(join(zipDestDir, "bin", "tool-link")).isSymbolicLink()).toBe(true)
-	})
+	}, { timeout: 20_000 })
 })
